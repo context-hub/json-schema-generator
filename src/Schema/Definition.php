@@ -70,7 +70,6 @@ final class Definition extends AbstractDefinition
 
         $rf = new \ReflectionEnum($this->type);
 
-        /** @var \ReflectionEnum $rf */
         if (!$rf->isBacked()) {
             throw new DefinitionException(\sprintf(
                 'Type `%s` is not a backed enum.',
