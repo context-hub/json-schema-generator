@@ -6,19 +6,18 @@ namespace Spiral\JsonSchemaGenerator\Tests\Unit\Fixture;
 
 use Spiral\JsonSchemaGenerator\Attribute\Field;
 
-final class Actor
+final readonly class Actor
 {
     public function __construct(
-        public readonly string $name,
-        public readonly int $age,
+        public string $name,
+        public int $age,
         #[Field(title: 'Biography', description: 'The biography of the actor')]
-        public readonly ?string $bio = null,
+        public ?string $bio = null,
         /**
          * @var list<Movie>
          */
-        public readonly array $movies = [],
+        public array $movies = [],
         #[Field(title: 'Best Movie', description: 'The best movie of the actor')]
-        public readonly ?Movie $bestMovie = null,
-    ) {
-    }
+        public ?Movie $bestMovie = null,
+    ) {}
 }

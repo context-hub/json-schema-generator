@@ -24,8 +24,8 @@ final class Definition extends AbstractDefinition
                 throw new DefinitionException(\sprintf(
                     'Property `%s` is not an instance of `%s`.',
                     // type name or class name
-                    \is_object($property) ? \get_class($property) : \gettype($property),
-                    Property::class
+                    \get_debug_type($property),
+                    Property::class,
                 ));
             }
 
@@ -64,7 +64,7 @@ final class Definition extends AbstractDefinition
         if (!$rf->isEnum()) {
             throw new DefinitionException(\sprintf(
                 'Type `%s` must be a backed enum or class with properties.',
-                $this->type instanceof Type ? $this->type->value : $this->type
+                $this->type instanceof Type ? $this->type->value : $this->type,
             ));
         }
 
@@ -74,7 +74,7 @@ final class Definition extends AbstractDefinition
         if (!$rf->isBacked()) {
             throw new DefinitionException(\sprintf(
                 'Type `%s` is not a backed enum.',
-                $this->type instanceof Type ? $this->type->value : $this->type
+                $this->type instanceof Type ? $this->type->value : $this->type,
             ));
         }
 
@@ -90,7 +90,7 @@ final class Definition extends AbstractDefinition
             'bool' => 'boolean',
             default => throw new DefinitionException(\sprintf(
                 'Type `%s` is not a backed enum.',
-                $this->type instanceof Type ? $this->type->value : $this->type
+                $this->type instanceof Type ? $this->type->value : $this->type,
             )),
         };
 

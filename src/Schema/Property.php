@@ -6,21 +6,21 @@ namespace Spiral\JsonSchemaGenerator\Schema;
 
 use Spiral\JsonSchemaGenerator\Exception\InvalidTypeException;
 
-final class Property implements \JsonSerializable
+final readonly class Property implements \JsonSerializable
 {
-    public readonly PropertyOptions $options;
+    public PropertyOptions $options;
 
     /**
      * @param Type|class-string $type
      * @param array<class-string|Type> $options
      */
     public function __construct(
-        public readonly Type|string $type,
+        public Type|string $type,
         array $options = [],
-        public readonly string $title = '',
-        public readonly string $description = '',
-        public readonly bool $required = false,
-        public readonly mixed $default = null,
+        public string $title = '',
+        public string $description = '',
+        public bool $required = false,
+        public mixed $default = null,
     ) {
         if (\is_string($this->type) && !\class_exists($this->type)) {
             throw new InvalidTypeException('Invalid type definition.');

@@ -1,56 +1,65 @@
 {
-    "name": "spiral/json-schema-generator",
-    "description": "Provides the ability to generate JSON schemas from Data Transfer Object (DTO) classes",
-    "keywords": [],
-    "homepage": "https://github.com/spiral/json-schema-generator",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Anton Titov (wolfy-j)",
-            "email": "wolfy-j@spiralscout.com"
-        },
-        {
-            "name": "Pavel Buchnev (butschster)",
-            "email": "pavel.buchnev@spiralscout.com"
-        },
-        {
-            "name": "Aleksei Gagarin (roxblnfk)",
-            "email": "alexey.gagarin@spiralscout.com"
-        },
-        {
-            "name": "Maksim Smakouz (msmakouz)",
-            "email": "maksim.smakouz@spiralscout.com"
-        }
-    ],
-    "require": {
-        "php": ">=8.1",
-        "symfony/property-info": "^6.3 || ^7.0",
-        "phpstan/phpdoc-parser": "^1.24",
-        "phpdocumentor/reflection-docblock": "^5.3"
+  "name": "context-hub/json-schema-generator",
+  "description": "Provides the ability to generate JSON schemas from Data Transfer Object (DTO) classes",
+  "keywords": [],
+  "homepage": "https://github.com/spiral/json-schema-generator",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anton Titov (wolfy-j)",
+      "email": "wolfy-j@spiralscout.com"
     },
-    "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "^10.4",
-        "friendsofphp/php-cs-fixer": "^3.38",
-        "vimeo/psalm": "^5.15"
+    {
+      "name": "Pavel Buchnev (butschster)",
+      "email": "pavel.buchnev@spiralscout.com"
     },
-    "autoload": {
-        "psr-4": {
-            "Spiral\\JsonSchemaGenerator\\": "src"
-        }
+    {
+      "name": "Aleksei Gagarin (roxblnfk)",
+      "email": "alexey.gagarin@spiralscout.com"
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Spiral\\JsonSchemaGenerator\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "psalm": "vendor/bin/psalm --config=psalm.xml ./src"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    {
+      "name": "Maksim Smakouz (msmakouz)",
+      "email": "maksim.smakouz@spiralscout.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.3",
+    "symfony/property-info": "^6.0 | ^7.0 | ^8.0",
+    "phpstan/phpdoc-parser": "^2.1",
+    "phpdocumentor/reflection-docblock": "^5.6"
+  },
+  "require-dev": {
+    "spiral/code-style": "^2.2.2",
+    "phpunit/phpunit": "^10.2",
+    "rector/rector": "^2.0",
+    "vimeo/psalm": "^6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spiral\\JsonSchemaGenerator\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Spiral\\JsonSchemaGenerator\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "cs-check": "vendor/bin/php-cs-fixer fix --dry-run",
+    "cs-fix": "vendor/bin/php-cs-fixer fix",
+    "psalm": "vendor/bin/psalm --config=psalm.xml ./src",
+    "psalm:ci": "vendor/bin/psalm --config=psalm.xml ./src --output-format=github --shepherd --show-info=false --stats --threads=4 --no-cache",
+    "refactor": "rector process --config=rector.php",
+    "refactor:ci": "rector process --config=rector.php --dry-run --ansi",
+    "test": "vendor/bin/phpunit",
+    "test:cc": [
+      "@putenv XDEBUG_MODE=coverage",
+      "phpunit --coverage-clover=.build/phpunit/logs/clover.xml --color=always"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

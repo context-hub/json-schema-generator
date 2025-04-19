@@ -9,16 +9,15 @@ use Spiral\JsonSchemaGenerator\Schema\Type as SchemaType;
 /**
  * @internal
  */
-final class Property implements PropertyInterface
+final readonly class Property implements PropertyInterface
 {
     public function __construct(
-        private readonly \ReflectionProperty $property,
-        private readonly TypeInterface $type,
-        private readonly bool $hasDefaultValue,
-        private readonly mixed $defaultValue = null,
-        private readonly array $collectionValueTypes = [],
-    ) {
-    }
+        private \ReflectionProperty $property,
+        private TypeInterface $type,
+        private bool $hasDefaultValue,
+        private mixed $defaultValue = null,
+        private array $collectionValueTypes = [],
+    ) {}
 
     /**
      * @return non-empty-string

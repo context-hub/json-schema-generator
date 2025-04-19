@@ -1,23 +1,45 @@
 <?xml version="1.0"?>
 <psalm
-        errorLevel="2"
+        errorLevel="4"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-        findUnusedCode="false"
-        findUnusedBaselineEntry="true"
 >
     <projectFiles>
-        <directory name="src" />
+        <directory name="src"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <UndefinedAttributeClass>
+        <InvalidArgument>
             <errorLevel type="suppress">
-                <referencedClass name="JetBrains\PhpStorm\ExpectedValues" />
+                <referencedFunction name="Spiral\Core\ScopeInterface::runScope"/>
             </errorLevel>
-        </UndefinedAttributeClass>
+        </InvalidArgument>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Spiral\Core\Attribute\Scope::__construct"/>
+                <referencedMethod name="Spiral\Core\Scope::__construct"/>
+            </errorLevel>
+        </InternalMethod>
+        <PossiblyUnusedMethod errorLevel="suppress" />
+        <InternalClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Spiral\Core\Attribute\Scope"/>
+                <referencedClass name="Spiral\Core\Attribute\Proxy"/>
+                <referencedClass name="Spiral\Core\Scope"/>
+            </errorLevel>
+        </InternalClass>
+        <MissingOverrideAttribute errorLevel="suppress" />
+        <UnusedParam errorLevel="suppress" />
     </issueHandlers>
+    <forbiddenFunctions>
+        <function name="var_dump"/>
+        <function name="dd"/>
+        <function name="dump"/>
+        <function name="trap"/>
+        <function name="tr"/>
+        <function name="td"/>
+    </forbiddenFunctions>
 </psalm>
