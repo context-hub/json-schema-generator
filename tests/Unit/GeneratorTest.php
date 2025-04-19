@@ -18,44 +18,44 @@ final class GeneratorTest extends TestCase
 
         $this->assertEquals(
             [
-                'properties'  => [
-                    'title'         => [
-                        'title'       => 'Title',
+                'properties' => [
+                    'title' => [
+                        'title' => 'Title',
                         'description' => 'The title of the movie',
-                        'type'        => 'string',
+                        'type' => 'string',
                     ],
-                    'year'          => [
-                        'title'       => 'Year',
+                    'year' => [
+                        'title' => 'Year',
                         'description' => 'The year of the movie',
-                        'type'        => 'integer',
+                        'type' => 'integer',
                     ],
-                    'description'   => [
-                        'title'       => 'Description',
+                    'description' => [
+                        'title' => 'Description',
                         'description' => 'The description of the movie',
-                        'type'        => 'string',
+                        'type' => 'string',
                     ],
-                    'director'      => [
+                    'director' => [
                         'type' => 'string',
                     ],
                     'releaseStatus' => [
-                        'title'       => 'Release Status',
+                        'title' => 'Release Status',
                         'description' => 'The release status of the movie',
-                        'allOf'       => [
+                        'allOf' => [
                             [
                                 '$ref' => '#/definitions/ReleaseStatus',
                             ],
                         ],
                     ],
                 ],
-                'required'    => [
+                'required' => [
                     'title',
                     'year',
                 ],
                 'definitions' => [
                     'ReleaseStatus' => [
                         'title' => 'ReleaseStatus',
-                        'type'  => 'string',
-                        'enum'  => [
+                        'type' => 'string',
+                        'enum' => [
                             'Released',
                             'Rumored',
                             'Post Production',
@@ -65,6 +65,7 @@ final class GeneratorTest extends TestCase
                         ],
                     ],
                 ],
+                'title' => 'Movie',
             ],
             $schema->jsonSerialize(),
         );
@@ -77,81 +78,82 @@ final class GeneratorTest extends TestCase
 
         $this->assertEquals(
             [
-                'properties'  => [
-                    'name'      => [
+                'properties' => [
+                    'name' => [
                         'type' => 'string',
                     ],
-                    'age'       => [
+                    'age' => [
                         'type' => 'integer',
                     ],
-                    'bio'       => [
-                        'title'       => 'Biography',
+                    'bio' => [
+                        'title' => 'Biography',
                         'description' => 'The biography of the actor',
-                        'type'        => 'string',
+                        'type' => 'string',
                     ],
-                    'movies'    => [
-                        'type'  => 'array',
+                    'movies' => [
+                        'type' => 'array',
                         'items' => [
                             '$ref' => '#/definitions/Movie',
                         ],
                         'default' => [],
                     ],
                     'bestMovie' => [
-                        'title'       => 'Best Movie',
+                        'title' => 'Best Movie',
                         'description' => 'The best movie of the actor',
-                        'allOf'       => [
+                        'allOf' => [
                             [
                                 '$ref' => '#/definitions/Movie',
                             ],
                         ],
                     ],
                 ],
-                'required'    => [
+                'required' => [
                     'name',
                     'age',
                 ],
+                'title' => 'Actor',
                 'definitions' => [
-                    'Movie'         => [
-                        'title'      => 'Movie',
-                        'type'       => 'object',
+                    'Movie' => [
+                        'title' => 'Movie',
+                        'type' => 'object',
                         'properties' => [
-                            'title'         => [
-                                'title'       => 'Title',
+                            'title' => [
+                                'title' => 'Title',
                                 'description' => 'The title of the movie',
-                                'type'        => 'string',
+                                'type' => 'string',
                             ],
-                            'year'          => [
-                                'title'       => 'Year',
+                            'year' => [
+                                'title' => 'Year',
                                 'description' => 'The year of the movie',
-                                'type'        => 'integer',
+                                'type' => 'integer',
                             ],
-                            'description'   => [
-                                'title'       => 'Description',
+                            'description' => [
+                                'title' => 'Description',
                                 'description' => 'The description of the movie',
-                                'type'        => 'string',
+                                'type' => 'string',
                             ],
-                            'director'      => [
+                            'director' => [
                                 'type' => 'string',
                             ],
                             'releaseStatus' => [
-                                'title'       => 'Release Status',
+                                'title' => 'Release Status',
                                 'description' => 'The release status of the movie',
-                                'allOf'       => [
+                                'allOf' => [
                                     [
                                         '$ref' => '#/definitions/ReleaseStatus',
                                     ],
                                 ],
                             ],
                         ],
-                        'required'   => [
+                        'required' => [
                             'title',
                             'year',
                         ],
                     ],
                     'ReleaseStatus' => [
                         'title' => 'ReleaseStatus',
-                        'type'  => 'string',
-                        'enum'  => [
+                        'type' => 'string',
+                        'enum' => [
                             'Released',
                             'Rumored',
                             'Post Production',

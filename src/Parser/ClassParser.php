@@ -78,17 +78,12 @@ final class ClassParser implements ClassParserInterface
                 continue;
             }
 
-            /**
-             * @var \ReflectionNamedType|null $type
-             */
-            $type = $property->getType();
-            if (!$type instanceof \ReflectionNamedType) {
-                continue;
-            }
+            // Parse the type using TypeParser
+            $typeInterface = TypeParser::fromReflectionType($property->getType());
 
             $properties[] = new Property(
                 property: $property,
-                type: new Type(name: $type->getName(), builtin: $type->isBuiltin(), nullable: $type->allowsNull()),
+                type: $typeInterface,
                 hasDefaultValue: $this->hasPropertyDefaultValue($property),
                 defaultValue: $this->getPropertyDefaultValue($property),
                 collectionValueTypes: $this->getPropertyCollectionTypes($property->getName()),
@@ -96,6 +91,17 @@ final class ClassParser implements ClassParserInterface
         }
 
         return $properties;
+    }
+
+    public function findAttribute(string $name): ?object
+    {
+        $attributes = $this->class->getAttributes($name);
+
+        if ($attributes === []) {
+            return null;
+        }
+
+        return $attributes[0]->newInstance();
     }
 
     public function isEnum(): bool

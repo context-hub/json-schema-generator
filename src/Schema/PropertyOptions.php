@@ -21,7 +21,7 @@ final class PropertyOptions implements \Countable, \ArrayAccess, \JsonSerializab
     public function __construct(array $options = [])
     {
         foreach ($options as $option) {
-            $this->options[] = new PropertyOption($option);
+            $this->options[] = $option instanceof PropertyOption ? $option : new PropertyOption($option);
         }
     }
 

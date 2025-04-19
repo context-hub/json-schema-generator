@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Spiral\JsonSchemaGenerator;
 
+use Spiral\JsonSchemaGenerator\Attribute\AdditionalProperty;
+use Spiral\JsonSchemaGenerator\Attribute\Definition as ClassDefinition;
 use Spiral\JsonSchemaGenerator\Attribute\Field;
 use Spiral\JsonSchemaGenerator\Parser\ClassParserInterface;
 use Spiral\JsonSchemaGenerator\Parser\Parser;
 use Spiral\JsonSchemaGenerator\Parser\ParserInterface;
 use Spiral\JsonSchemaGenerator\Parser\PropertyInterface;
 use Spiral\JsonSchemaGenerator\Parser\TypeInterface;
+use Spiral\JsonSchemaGenerator\Parser\UnionType;
 use Spiral\JsonSchemaGenerator\Schema\Definition;
 use Spiral\JsonSchemaGenerator\Schema\Property;
 
@@ -34,6 +37,35 @@ class Generator implements GeneratorInterface
         }
 
         $schema = new Schema();
+
+        // Process class-level Definition attribute if present
+        $classDefinition = $class->findAttribute(ClassDefinition::class);
+        if ($classDefinition !== null) {
+            if (!empty($classDefinition->title)) {
+                $schema->setTitle($classDefinition->title);
+            } else {
+                // Use class short name as default title
+                $schema->setTitle($class->getShortName());
+            }
+
+            if (!empty($classDefinition->description)) {
+                $schema->setDescription($classDefinition->description);
+            }
+
+            if ($classDefinition->id !== null) {
+                $schema->setId($classDefinition->id);
+            }
+
+            if ($classDefinition->schemaVersion !== null) {
+                $schema->setSchemaVersion($classDefinition->schemaVersion);
+            }
+        } else {
+            // Set title to class name by default if no definition attribute
+            $schema->setTitle($class->getShortName());
+        }
+
+        // Process additional properties attributes if present
+        $this->processAdditionalProperties($class, $schema);
 
         $dependencies = [];
         // Generating properties
@@ -80,14 +112,50 @@ class Generator implements GeneratorInterface
         return $schema;
     }
 
+    /**
+     * Process AdditionalProperty attributes on a class
+     */
+    protected function processAdditionalProperties(ClassParserInterface $class, Schema $schema): void
+    {
+        // Get reflection class to extract attributes with \ReflectionClass::getAttributes()
+        try {
+            $reflectionClass = new \ReflectionClass($class->getName());
+            $additionalProperties = $reflectionClass->getAttributes(AdditionalProperty::class);
+
+            foreach ($additionalProperties as $additionalProperty) {
+                $instance = $additionalProperty->newInstance();
+                $schema->addAdditionalProperty($instance->name, $instance->value);
+            }
+        } catch (\ReflectionException) {
+            // Silently fail, we'll just not have additional properties
+        }
+    }
+
     protected function generateDefinition(ClassParserInterface $class, array &$dependencies = []): ?Definition
     {
         $properties = [];
+
+        // Process class-level Definition attribute if present
+        $title = $class->getShortName();
+        $description = '';
+
+        $classDefinition = $class->findAttribute(ClassDefinition::class);
+        if ($classDefinition !== null) {
+            if (!empty($classDefinition->title)) {
+                $title = $classDefinition->title;
+            }
+
+            if (!empty($classDefinition->description)) {
+                $description = $classDefinition->description;
+            }
+        }
+
         if ($class->isEnum()) {
             return new Definition(
                 type: $class->getName(),
                 options: $class->getEnumValues(),
-                title: $class->getShortName(),
+                title: $title,
+                description: $description,
             );
         }
 
@@ -102,7 +170,12 @@ class Generator implements GeneratorInterface
             $properties[$property->getName()] = $psc;
         }
 
-        return new Definition(type: $class->getName(), title: $class->getShortName(), properties: $properties);
+        return new Definition(
+            type: $class->getName(),
+            title: $title,
+            description: $description,
+            properties: $properties,
+        );
     }
 
     protected function generateProperty(PropertyInterface $property): ?Property
@@ -124,6 +197,12 @@ class Generator implements GeneratorInterface
         }
 
         $type = $property->getType();
+
+        // Handle union types (e.g., string|int|bool)
+        if ($type instanceof UnionType) {
+            $required = $default === null && !$type->allowsNull();
+            return new Property($type, [], $title, $description, $required, $default);
+        }
 
         $options = [];
         if ($property->isCollection()) {

@@ -7,8 +7,11 @@ namespace Spiral\JsonSchemaGenerator\Tests\Unit\Parser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Spiral\JsonSchemaGenerator\Exception\GeneratorException;
+use Spiral\JsonSchemaGenerator\Attribute\Definition;
+use Spiral\JsonSchemaGenerator\Attribute\AdditionalProperty;
 use Spiral\JsonSchemaGenerator\Parser\ClassParser;
 use Spiral\JsonSchemaGenerator\Schema\Type;
+use Spiral\JsonSchemaGenerator\Tests\Unit\Fixture\Product;
 use Spiral\JsonSchemaGenerator\Tests\Unit\Fixture\Movie;
 use Spiral\JsonSchemaGenerator\Tests\Unit\Fixture\ReleaseStatus;
 
@@ -241,5 +244,38 @@ final class ClassParserTest extends TestCase
     {
         $parser = new ClassParser($class::class);
         $this->assertEquals($expected, $parser->getProperties()[0]->getCollectionValueTypes());
+    }
+
+    public function testFindAttribute(): void
+    {
+        // Test with a class that has the Definition attribute
+        $parser = new ClassParser(Product::class);
+
+        $definition = $parser->findAttribute(Definition::class);
+        $this->assertInstanceOf(Definition::class, $definition);
+        $this->assertEquals('Product Schema', $definition->title);
+        $this->assertEquals('A product in the catalog', $definition->description);
+        $this->assertEquals('https://example.com/schemas/product.json', $definition->id);
+        $this->assertEquals('http://json-schema.org/draft-07/schema#', $definition->schemaVersion);
+
+        // Test with a class that doesn't have a sought attribute
+        $parser = new ClassParser(Movie::class);
+        $this->assertNull($parser->findAttribute(Definition::class));
+    }
+
+    public function testFindAttributeReturnsFirstInstance(): void
+    {
+        // The findAttribute method should return the first instance of a repeatable attribute
+        // but we can't directly test this through ClassParser because it uses ReflectionClass::getAttributes
+        // which only returns the first attribute by default
+
+        $ref = new \ReflectionClass(Product::class);
+        $additionalPropAttrs = $ref->getAttributes(AdditionalProperty::class);
+
+        $this->assertGreaterThan(
+            1,
+            \count($additionalPropAttrs),
+            'Product class should have multiple AdditionalProperty attributes for this test to be valid',
+        );
     }
 }

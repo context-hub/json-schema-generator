@@ -39,7 +39,7 @@ final class SchemaTest extends TestCase
                         'type' => 'string',
                     ],
                 ],
-                'required'   => [
+                'required' => [
                     'name',
                 ],
             ],
@@ -93,28 +93,28 @@ final class SchemaTest extends TestCase
         $this->assertEquals(
             [
                 'properties' => [
-                    'name'      => [
-                        'title'       => 'Name',
+                    'name' => [
+                        'title' => 'Name',
                         'description' => 'Name of the user',
-                        'type'        => 'string',
+                        'type' => 'string',
                     ],
-                    'age'       => [
-                        'title'       => 'Age',
+                    'age' => [
+                        'title' => 'Age',
                         'description' => 'Age of the user',
-                        'type'        => 'integer',
+                        'type' => 'integer',
                     ],
-                    'height'    => [
-                        'title'       => 'Height',
+                    'height' => [
+                        'title' => 'Height',
                         'description' => 'Height of the user',
-                        'type'        => 'number',
+                        'type' => 'number',
                     ],
                     'is_active' => [
-                        'title'       => 'Is Active',
+                        'title' => 'Is Active',
                         'description' => 'Is the user active',
-                        'type'        => 'boolean',
+                        'type' => 'boolean',
                     ],
                 ],
-                'required'   => [
+                'required' => [
                     'name',
                     'age',
                     'height',
@@ -142,15 +142,15 @@ final class SchemaTest extends TestCase
             [
                 'properties' => [
                     'hobbies' => [
-                        'type'        => 'array',
-                        'items'       => [
+                        'type' => 'array',
+                        'items' => [
                             'type' => 'string',
                         ],
-                        'title'       => 'Hobbies',
+                        'title' => 'Hobbies',
                         'description' => 'Hobbies of the user',
                     ],
                 ],
-                'required'   => [
+                'required' => [
                     'hobbies',
                 ],
             ],
@@ -176,18 +176,18 @@ final class SchemaTest extends TestCase
             [
                 'properties' => [
                     'hobbies' => [
-                        'type'        => 'array',
-                        'items'       => [
-                            'anyOf' => [
+                        'type' => 'array',
+                        'items' => [
+                            'oneOf' => [
                                 ['type' => 'string'],
                                 ['type' => 'number'],
                             ],
                         ],
-                        'title'       => 'Hobbies',
+                        'title' => 'Hobbies',
                         'description' => 'Hobbies of the user',
                     ],
                 ],
-                'required'   => [
+                'required' => [
                     'hobbies',
                 ],
             ],
@@ -213,16 +213,16 @@ final class SchemaTest extends TestCase
             [
                 'properties' => [
                     'hobbies' => [
-                        'title'       => 'Some value',
+                        'title' => 'Some value',
                         'description' => 'Some random user value',
-                        'anyOf'       => [
+                        'oneOf' => [
                             ['type' => 'string'],
                             ['type' => 'number'],
                             ['type' => 'boolean'],
                         ],
                     ],
                 ],
-                'required'   => [
+                'required' => [
                     'hobbies',
                 ],
             ],
@@ -277,7 +277,7 @@ final class SchemaTest extends TestCase
                 'properties' => [
                     'movie' => [
                         'title' => 'Some movie',
-                        'type'  => 'array',
+                        'type' => 'array',
                         'items' => [
                             '$ref' => '#/definitions/Movie',
                         ],
@@ -306,9 +306,9 @@ final class SchemaTest extends TestCase
                 'properties' => [
                     'movie' => [
                         'title' => 'Some movie',
-                        'type'  => 'array',
+                        'type' => 'array',
                         'items' => [
-                            'anyOf' => [
+                            'oneOf' => [
                                 [
                                     '$ref' => '#/definitions/Movie',
                                 ],
@@ -353,12 +353,12 @@ final class SchemaTest extends TestCase
 
         $this->assertEquals(
             [
-                'properties'  => [
+                'properties' => [
                     'movie' => [
                         'title' => 'Some movie',
-                        'type'  => 'array',
+                        'type' => 'array',
                         'items' => [
-                            'anyOf' => [
+                            'oneOf' => [
                                 [
                                     '$ref' => '#/definitions/Movie',
                                 ],
@@ -371,15 +371,15 @@ final class SchemaTest extends TestCase
                 ],
                 'definitions' => [
                     'Movie' => [
-                        'type'       => 'object',
+                        'type' => 'object',
                         'properties' => [
                             'title' => [
-                                'type'        => 'string',
-                                'title'       => 'Title',
+                                'type' => 'string',
+                                'title' => 'Title',
                                 'description' => 'Title of the movie',
                             ],
                         ],
-                        'required'   => [
+                        'required' => [
                             'title',
                         ],
                     ],
