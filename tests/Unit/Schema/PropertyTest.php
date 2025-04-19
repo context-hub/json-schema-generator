@@ -58,7 +58,7 @@ final class PropertyTest extends TestCase
         );
 
         $this->assertEquals([
-            'anyOf' => [
+            'oneOf' => [
                 [
                     '$ref' => '#/definitions/Movie',
                 ],
@@ -130,7 +130,7 @@ final class PropertyTest extends TestCase
             'type' => 'array',
             'title' => 'Some movie',
             'items' => [
-                'anyOf' => [
+                'oneOf' => [
                     [
                         '$ref' => '#/definitions/Movie',
                     ],

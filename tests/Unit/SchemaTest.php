@@ -178,7 +178,7 @@ final class SchemaTest extends TestCase
                     'hobbies' => [
                         'type' => 'array',
                         'items' => [
-                            'anyOf' => [
+                            'oneOf' => [
                                 ['type' => 'string'],
                                 ['type' => 'number'],
                             ],
@@ -215,7 +215,7 @@ final class SchemaTest extends TestCase
                     'hobbies' => [
                         'title' => 'Some value',
                         'description' => 'Some random user value',
-                        'anyOf' => [
+                        'oneOf' => [
                             ['type' => 'string'],
                             ['type' => 'number'],
                             ['type' => 'boolean'],
@@ -308,7 +308,7 @@ final class SchemaTest extends TestCase
                         'title' => 'Some movie',
                         'type' => 'array',
                         'items' => [
-                            'anyOf' => [
+                            'oneOf' => [
                                 [
                                     '$ref' => '#/definitions/Movie',
                                 ],
@@ -358,7 +358,7 @@ final class SchemaTest extends TestCase
                         'title' => 'Some movie',
                         'type' => 'array',
                         'items' => [
-                            'anyOf' => [
+                            'oneOf' => [
                                 [
                                     '$ref' => '#/definitions/Movie',
                                 ],

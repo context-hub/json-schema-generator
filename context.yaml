@@ -26,3 +26,31 @@ documents:
       - type: file
         sourcePaths:
           - tests
+
+tools:
+  - id: run-all-tests
+    description: "Run all PHPUnit tests for the json-schema-generator"
+    type: run
+    commands:
+      - cmd: composer
+        args:
+          - install
+        workingDir: "./"
+      - cmd: vendor/bin/phpunit
+        args:
+          - "--color=always"
+        workingDir: "./"
+
+  - id: run-union-tests
+    description: "Run only the union type tests"
+    type: run
+    commands:
+      - cmd: composer
+        args:
+          - install
+        workingDir: "./"
+      - cmd: vendor/bin/phpunit
+        args:
+          - "--color=always"
+          - "--filter=UnionType"
+        workingDir: "./"

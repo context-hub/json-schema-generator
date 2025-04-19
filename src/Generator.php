@@ -12,6 +12,7 @@ use Spiral\JsonSchemaGenerator\Parser\Parser;
 use Spiral\JsonSchemaGenerator\Parser\ParserInterface;
 use Spiral\JsonSchemaGenerator\Parser\PropertyInterface;
 use Spiral\JsonSchemaGenerator\Parser\TypeInterface;
+use Spiral\JsonSchemaGenerator\Parser\UnionType;
 use Spiral\JsonSchemaGenerator\Schema\Definition;
 use Spiral\JsonSchemaGenerator\Schema\Property;
 
@@ -196,6 +197,12 @@ class Generator implements GeneratorInterface
         }
 
         $type = $property->getType();
+
+        // Handle union types (e.g., string|int|bool)
+        if ($type instanceof UnionType) {
+            $required = $default === null && !$type->allowsNull();
+            return new Property($type, [], $title, $description, $required, $default);
+        }
 
         $options = [];
         if ($property->isCollection()) {
