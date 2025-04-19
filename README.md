@@ -1,11 +1,11 @@
 # JSON Schema Generator
 
-[![PHP Version Require](https://poser.pugx.org/spiral/json-schema-generator/require/php)](https://packagist.org/packages/spiral/json-schema-generator)
-[![Latest Stable Version](https://poser.pugx.org/spiral/json-schema-generator/v/stable)](https://packagist.org/packages/spiral/json-schema-generator)
-[![phpunit](https://github.com/spiral/json-schema-generator/actions/workflows/phpunit.yml/badge.svg)](https://github.com/spiral/json-schema-generator/actions)
-[![psalm](https://github.com/spiral/json-schema-generator/actions/workflows/psalm.yml/badge.svg)](https://github.com/spiral/json-schema-generator/actions)
-[![Total Downloads](https://poser.pugx.org/spiral/json-schema-generator/downloads)](https://packagist.org/packages/spiral/json-schema-generator)
-[![psalm-level](https://shepherd.dev/github/spiral/json-schema-generator/level.svg)](https://shepherd.dev/github/spiral/json-schema-generator)
+[![PHP Version Require](https://poser.pugx.org/context-hub/json-schema-generator/require/php)](https://packagist.org/packages/context-hub/json-schema-generator)
+[![Latest Stable Version](https://poser.pugx.org/context-hub/json-schema-generator/v/stable)](https://packagist.org/packages/context-hub/json-schema-generator)
+[![phpunit](https://github.com/context-hub/json-schema-generator/actions/workflows/phpunit.yml/badge.svg)](https://github.com/context-hub/json-schema-generator/actions)
+[![psalm](https://github.com/context-hub/json-schema-generator/actions/workflows/psalm.yml/badge.svg)](https://github.com/context-hub/json-schema-generator/actions)
+[![Total Downloads](https://poser.pugx.org/context-hub/json-schema-generator/downloads)](https://packagist.org/packages/context-hub/json-schema-generator)
+[![psalm-level](https://shepherd.dev/github/context-hub/json-schema-generator/level.svg)](https://shepherd.dev/github/context-hub/json-schema-generator)
 
 The JSON Schema Generator is a PHP package that simplifies the generation of [JSON schemas](https://json-schema.org/) from Data Transfer Object (DTO) classes. 
 It supports PHP enumerations and generic type annotations for arrays and provides an attribute for specifying title, description, and default value.
@@ -23,7 +23,7 @@ Make sure that your server is configured with the following PHP versions and ext
 You can install the package via Composer:
 
 ```bash
-composer require spiral/json-schema-generator
+composer require context-hub/json-schema-generator
 ```
 
 ## Usage
