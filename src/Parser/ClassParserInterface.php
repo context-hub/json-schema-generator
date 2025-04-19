@@ -24,4 +24,15 @@ interface ClassParserInterface
     public function isEnum(): bool;
 
     public function getEnumValues(): array;
+
+    /**
+     * Find a class-level attribute.
+     *
+     * @template T
+     *
+     * @param class-string<T> $name The class name of the attribute.
+     *
+     * @return T|null The attribute or {@see null}, if the requested attribute does not exist.
+     */
+    public function findAttribute(string $name): ?object;
 }

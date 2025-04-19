@@ -98,6 +98,17 @@ final class ClassParser implements ClassParserInterface
         return $properties;
     }
 
+    public function findAttribute(string $name): ?object
+    {
+        $attributes = $this->class->getAttributes($name);
+
+        if ($attributes === []) {
+            return null;
+        }
+
+        return $attributes[0]->newInstance();
+    }
+
     public function isEnum(): bool
     {
         return $this->class->isEnum();
